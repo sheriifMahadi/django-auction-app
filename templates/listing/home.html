@@ -1,0 +1,71 @@
+{% extends './base.html' %}
+{% load static %}
+
+
+{% block  content %} 
+<div class="top-items">
+    <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="pb-3 h5">Top Items</div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+
+        {% for listing in top_listings %}
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="img-fluid" alt="Responsive image" src="{{ listing.image.url }}">
+            <div class="card-body">
+              <p class="card-text">
+                <a class="text-dark text-decoration-none" href="{{ listing.get_absolute_url }}">{{ listing.item }}</a>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ listing.price}} egoCoin</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+        
+        
+    </div>
+
+<div class="new-items">
+    <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="pb-3 h5">New Items</div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+
+        {% for listing in new_listings %}
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="img-fluid" alt="Responsive image" src="{{ listing.image.url }}">
+            <div class="card-body">
+              <p class="card-text">
+                <a class="text-dark text-decoration-none" href="{{ listing.get_absolute_url }}">{{ listing.item }}</a>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ listing.price}} egoCoin</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+        
+        
+    </div>
+
+   
+{% endblock %}
