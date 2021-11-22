@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+
+
+class ListingManager(models.Manager):
+    def get_queryset(self):
+        return super(ListingManager, self).get_queryset().filter(is_active=True)
+
 class Category(models.Model):
     """Model for listing categories"""
     name = models.CharField(max_length=255, db_index=True)
@@ -30,6 +36,9 @@ class Listing(models.Model):
     slug = models.SlugField(max_length=255)
     is_active = models.BooleanField(True)
     auctioned = models.BooleanField(False)
+    objects = models.Manager()
+    listings=ListingManager()
+
 
     class Meta:
         verbose_name_plural = 'Listings'
@@ -40,3 +49,14 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.item
+
+class ListingBid(models.Model):
+    """
+    Model for Bids for all products
+    """
+    item = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    bids = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural = 'ListingBids'
+    

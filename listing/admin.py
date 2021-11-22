@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Listing
+from .models import Category, Listing, ListingBid
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -16,3 +16,9 @@ class ListingAdmin(admin.ModelAdmin):
     list_filter = ['is_active']
     list_editable = ['price']
     prepopulated_fields = {'slug': ('item', )}
+
+
+@admin.register(ListingBid)
+class ListingBidAdmin(admin.ModelAdmin):
+    list_display = ['item', 'bids', ]
+

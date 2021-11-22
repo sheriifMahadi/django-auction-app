@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('listing.urls', namespace='listing')),
+    path('', include('userBids.urls', namespace='userBids'))
 ]
 
 if settings.DEBUG:

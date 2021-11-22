@@ -15,27 +15,28 @@
                 <div class="border">
                     <div class="col border-bottom">
                         <div class="row p-3">
-                            <div class="col-6"></div>
+                            <div class="col-6">Bids: {{bids.bids}}</div>
                             <div class="col-6 text-end"><span class="h4 fw-bold">£{{ listing.price }}</span></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="row p-3">
                             <div class="col-6">
-                                <label for="select">Qty</label>
-                                <select id="select">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="4">5</option>
 
-                                </select>
+                            {% if watch_item %}
+                                    <a href="{% url 'my_bids:rm_watchlist' listing.id%}">Remove from Watchlist</a>
+                                {% else %}
+                                        <button type="button" id="watch-button" value="{{listing.id}}" class="btn btn-secondary btn-sm">
+                                        <a href="{% url 'my_bids:add_watchlist' listing.item%}" style="color:white;text-decoration:none;">
+                                        Watch Item</a></button>
+                                {% endif %}
+                                    
 
                             </div>
                             <div class="col-6 text-end">
-<button type="button" id="add-button" value="{{listing.id}}" class="btn btn-secondary btn-sm">Add to basket</button></div>
+<button type="button" id="add-button" value="{{listing.id}}" class="btn btn-secondary btn-sm">Place a Bid</button></div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -43,6 +44,24 @@
     </main>
 
 </div>
+    {% comment %} $(document).on('click', '.delete-button', function (e) {
+        e.preventDefault();
+        var prodid = $(this).data('index');
+        $.ajax({
+        type: 'POST',
+        url: '{% url "wa" %}',
+        data: {
+            productid: $(this).data('index'),
+            csrfmiddlewaretoken: "{{csrf_token}}",
+            action: 'post'
+        },
+        success: function (json) {
+            $('.product-item[data-index="' + prodid + '"]').remove();
+            document.getElementById("subtotal").innerHTML = json.subtotal;
+            document.getElementById("basket-qty").innerHTML = json.qty
+        },
+        error: function (xhr, errmsg, err) {}
+        });
+    }) {% endcomment %}
 
 {% endblock  %}
-

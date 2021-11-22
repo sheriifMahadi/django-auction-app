@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">alterEgo</a>
+      <a class="navbar-brand" href="{% url 'listing:listings' %}">alterEgo</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -21,12 +21,11 @@
       <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'listing:listings' %}">Home</a>
           </li>
               <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown04" data-bs-popper="none">
-            <li><a class="dropdown-item" href="{% url "listing:listings" %}">All</a></li>
             {% for cat in categories %}
             <li><a class="dropdown-item" href="{{cat.get_absolute_url}}">{{cat}}</a></li>
             {% endfor %}
@@ -35,15 +34,23 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">WatchList</a>
+            <a class="nav-link" href="{% url 'my_bids:watchlist'%}">Watch List</a>
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">User name</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown04" data-bs-popper="none">
+          {% if user.is_authenticated %}
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">{{user.username}}</a>
+              <ul class="dropdown-menu" aria-labelledby="dropdown04" data-bs-popper="none">
               <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">My Auctions</a></li>
+              <li><a class="dropdown-item" href="{% url 'my_bids:my-bids' %}">My Bids</a></li>
               <li><a class="dropdown-item" href="#">Wallet</a></li>
+              <li><a class="dropdown-item" href="{% url 'my_bids:logout' %}">Log Out</a></li>
+
+          {% else %}
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'my_bids:login' %}">Log in</a>
+          </li>
+          {% endif %}
 
             </ul>
           </li>
