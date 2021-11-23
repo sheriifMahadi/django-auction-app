@@ -28,7 +28,7 @@ class Listing(models.Model):
     on_delete=models.CASCADE)
     item = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='images/', default='images/back.png')
+    image = models.ImageField(upload_to='static', default='images/back.png')
     price = models.DecimalField(max_digits=19, decimal_places=2)
     date_created= models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, 

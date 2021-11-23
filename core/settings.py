@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,15 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+
+
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q@mapby&ce88bq+7_%y^*the++sii30qp6x#5p)jtcq4#0!q6%'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['e-auction-app-2342.herokuapp.com/', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['e-auction-app-2342.herokuapp.com', '127.0.0.1']
 
-
+# 'e-auction-app-2342.herokuapp.com/', '127.0.0.1:8000'
 # Application definition
 
 INSTALLED_APPS = [
@@ -126,6 +132,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -136,20 +147,18 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # The URL to use when referring to static files (where they will be served from)
-STATIC_URL = '/static/'
+STATIC_URL = '/media/static/'
 STATICFILES_DIR = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'listing/static')
+MEDIA_ROOT = ('listing')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Heroku: Update database configuration from $DATABASE_URL.
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

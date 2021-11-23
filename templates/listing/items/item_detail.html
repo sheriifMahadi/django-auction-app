@@ -1,4 +1,5 @@
 {% extends '../base.html' %}
+{% load static %}
 
 
 {% block content %}
@@ -44,24 +45,6 @@
     </main>
 
 </div>
-    {% comment %} $(document).on('click', '.delete-button', function (e) {
-        e.preventDefault();
-        var prodid = $(this).data('index');
-        $.ajax({
-        type: 'POST',
-        url: '{% url "wa" %}',
-        data: {
-            productid: $(this).data('index'),
-            csrfmiddlewaretoken: "{{csrf_token}}",
-            action: 'post'
-        },
-        success: function (json) {
-            $('.product-item[data-index="' + prodid + '"]').remove();
-            document.getElementById("subtotal").innerHTML = json.subtotal;
-            document.getElementById("basket-qty").innerHTML = json.qty
-        },
-        error: function (xhr, errmsg, err) {}
-        });
-    }) {% endcomment %}
+
 
 {% endblock  %}
