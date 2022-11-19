@@ -6,7 +6,7 @@ from listing.models import Listing
 class UserBids(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,
     related_name='bidding_user')
-    item = models.ForeignKey(Listing, on_delete=models.CASCADE,
+    item = models.ManyToManyField(Listing,
     related_name='user_item')
 
 class WatchList(models.Model):

@@ -1,5 +1,4 @@
-from django import http
-from django.http.response import HttpResponse
+from curses import noecho
 from django.shortcuts import render, get_object_or_404
 
 from .models import Category, Listing, ListingBid
@@ -9,7 +8,6 @@ def categories(request):
     return {
         'categories': Category.objects.all()
     }
-
 
 def listings(request):
     top_listings = Listing.listings.all()[:4]
@@ -23,12 +21,19 @@ def listings(request):
 
 def item_detail(request, slug):
     listing = get_object_or_404(Listing, slug=slug, is_active=True)
-    watchlist_item = WatchList.objects.filter(id=listing.id)
-    bids = ListingBid.objects.get()
-    watch_item = WatchList.objects.filter(item=5)
-    context = {'listing': listing, 'bids':bids, 
-    'watchlist_item':watch_item}
-    
+    bids = ListingBid.objects.filter(item=listing.id).values('bids')
+    user_item = WatchList.objects.filter(user=request.user)
+    watch_item = user_item[0].item.filter(item=listing)    
+    bidCount = ListingBid.objects.filter(item=listing.id).first()
+    if bidCount:
+        bidCount = bidCount.bidders.count()
+    else:
+        bidCount = 0
+
+    context = {'listing': listing,  
+    'watchlist_item': watch_item,
+    'bids': bidCount
+    }
     return render(request, 'listing/items/item_detail.html', context)
 
 def category_list(request, slug):

@@ -3,6 +3,11 @@
 
 
 {% block  content %} 
+<style>
+  .hidden {
+    display: none
+  }
+</style>
 <div class="top-items">
     <div class="album py-5 bg-light">
     <div class="container">
@@ -14,13 +19,13 @@
 
         <div class="col">
           <div class="card shadow-sm">
-            <img class="img-fluid" alt="Responsive image" src="{% static 'img1_DCytNvp.png' %}">
+            <img class="img-fluid" alt="Responsive image" src="{{ listing.image.url }}">
             <div class="card-body">
               <p class="card-text">
                 <a class="text-dark text-decoration-none" href="{{ listing.get_absolute_url }}">{{ listing.item }}</a>
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">{{ listing.price}} egoCoin</small>
+                <small class="text-muted">${{ listing.price}}</small>
               </div>
             </div>
           </div>
@@ -46,13 +51,13 @@
 
         <div class="col">
           <div class="card shadow-sm">
-            <img class="img-fluid" alt="Responsive image" src="{% static 'img1_DCytNvp.png' %}">
+            <img class="img-fluid" alt="Responsive image" src="{{ listing.image.url }}">
             <div class="card-body">
               <p class="card-text">
                 <a class="text-dark text-decoration-none" href="{{ listing.get_absolute_url }}">{{ listing.item }}</a>
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">{{ listing.price}} egoCoin</small>
+                <small class="text-muted">${{ listing.price}}</small>
               </div>
             </div>
           </div>
@@ -67,5 +72,29 @@
         
     </div>
 
-   
+    <script>
+      function liveSearch(){
+        const items = document.querySelectorAll('.col')
+        const search_query = document.querySelector('.form-control').value
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].innerText.toLowerCase()
+          .includes(search_query.toLowerCase())){
+            items[i].classList.remove('hidden')
+          }
+          else {
+            items[i].classList.add('hidden')
+          }
+        }
+  
+      }
+      let typingTimer;        
+      let typeInterval = 500; // Half a second
+      const search_query = document.querySelector('.form-control')
+
+      search_query.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(liveSearch, typeInterval);
+      });
+    </script>
+    
 {% endblock %}

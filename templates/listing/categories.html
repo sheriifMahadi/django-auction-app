@@ -4,7 +4,6 @@
 
 {% block  content %} 
 
-    
     <div class="top-items">
     <div class="album py-5 bg-light">
     <div class="container">
@@ -22,7 +21,7 @@
                 <a class="text-dark text-decoration-none" href="{{ listing.get_absolute_url }}">{{ listing.item }}</a>
               </p>
               <div class="d-flex justify-content-between align-items-center">
-                <small class="text-muted">{{ listing.price}} egoCoin</small>
+                <small class="text-muted">${{ listing.price}}</small>
               </div>
             </div>
           </div>

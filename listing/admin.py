@@ -11,7 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
     list_display = ['item', 'created_by', 'slug', 
-                    'price', 'is_active', 'date_created',
+                    'price', 'is_active', 'date_created','auctioned'
                     ]
     list_filter = ['is_active']
     list_editable = ['price']
